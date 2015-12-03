@@ -1,0 +1,22 @@
+﻿team image
+host can end a quiz which deletes all teams and resets state (maybe just call this reset?)
+host can (has to?) post score increments for each team. Scores have to be floats so .5 scores are supported.
+Confirmation on reset url
+pause music etc.
+host dashboard for things like reset
+team creation screen has a list of buzzer sounds that you can preview and play when you buzz in.
+fireworks on join
+music work on refresh (iframe?)
+
+styling
+-------
+
+center align and jazz up teams
+
+question ideas
+--------------
+
+video questions
+image rounds (mashups/guess the celebrity/event etc.)
+pictorial phrases
+guess the lyric

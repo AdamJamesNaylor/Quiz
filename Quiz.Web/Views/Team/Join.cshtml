@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Join quiz";
+}
+
+<h2>Join the quiz by setting up your team.</h2>
+
+<form action="/team/create" method="POST">
+
+    <div>
+        <label for="name">Team name:</label>
+        <input type="text" id="name" name="name"/>
+    </div>
+    <div>
+        <label for="photo">Team photo:</label>
+        <input type="file" capture="camera" accept="image/*" id="photo" name="photo">
+    </div>
+    <input type="Submit" value="Submit"/>
+</form>

@@ -1,0 +1,21 @@
+﻿@model Quiz.Web.Models.TeamList
+@{
+    ViewBag.Title = "Awaiting teams";
+}
+
+<!--audio loop autoplay>
+    <source src="/content/mario.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio-->
+
+<h3>Awaiting teams</h3>
+
+<p>Visit the following web address on your phone if you want to create a team:</p>
+<h2>/team/join</h2>
+@{
+    int i = 1;
+    foreach (var team in Model.Teams) {
+        <h3>Team @i: @team.Name</h3>
+        i++;
+    }
+}
