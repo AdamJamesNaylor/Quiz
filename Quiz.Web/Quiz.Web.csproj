@@ -125,6 +125,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\XmlHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -137,6 +138,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Game\Questions.xml" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -171,12 +173,12 @@
     <Content Include="Views\Dash\Index.cshtml" />
     <Content Include="Views\Team\Join.cshtml" />
     <Content Include="Views\Dash\AwaitingView.cshtml" />
+    <Content Include="Views\Host\Index.cshtml" />
+    <Content Include="Views\Host\_Host.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Game\" />
     <Folder Include="Teams\" />
-    <Folder Include="Views\Host\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

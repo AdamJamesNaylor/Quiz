@@ -1,42 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿
+namespace Quiz.Web.Controllers {
 
-namespace Quiz.Web.Controllers
-{
     using System.IO;
-    using System.Runtime.Caching;
     using System.Xml.Linq;
     using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
-    public class DashController : Controller {
+    public class DashController
+        : Controller {
+
         public static bool refresh = false;
+
+        public DashController() {
+            _xml = new XmlHelper(Server);
+        }
 
         // GET: Dash
         public ActionResult Index()
         {
             //http://www.schillmania.com/projects/fireworks/
-            var state = GetState();
+            var state = _xml.GetState();
             return ProcessState(state);
-
-        }
-
-        public string GetState() {
-            var gameFolder = Server.MapPath("~/Game/");
-            XElement xelement = XElement.Load(gameFolder + "/Game.xml");
-
-            XElement stateElement = xelement.Element("state");
-            return stateElement.Value;
         }
 
         private ActionResult ProcessState(string state) {
             switch (state) {
                 case "":
-                    var model = new TeamList();
-                    model.Teams = GetTeams();
+                    var model = new TeamList {
+                        Teams = GetTeams()
+                    };
                     return View("AwaitingView", model);
+                case "start":
+
+                    break;
             }
             return View();
         }
@@ -65,5 +63,7 @@ namespace Quiz.Web.Controllers
             refresh = false;
             return Json(true);
         }
+
+        private XmlHelper _xml;
     }
 }

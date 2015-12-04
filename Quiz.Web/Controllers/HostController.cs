@@ -1,21 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace Quiz.Web.Controllers
 {
     using System.IO;
     using System.Xml;
     using System.Xml.Linq;
+    using System.Web.Mvc;
 
     public class HostController : Controller
     {
+        public HostController() {
+            _xml = new XmlHelper(Server);
+
+        }
         // GET: Host
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
+            var state = _xml.GetState();
+            switch (state) {
+                case "":
+
+                    break;
+                case "start":
+                    //start screen for host
+                    break;
+            }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Start() {
+            _xml.ChangeState("start");
+            return Redirect("/host");
         }
 
         public ActionResult Reset() {
@@ -52,5 +66,7 @@ namespace Quiz.Web.Controllers
             foreach (string filePath in filePaths)
                 System.IO.File.Delete(filePath);
         }
+
+        private XmlHelper _xml;
     }
 }
