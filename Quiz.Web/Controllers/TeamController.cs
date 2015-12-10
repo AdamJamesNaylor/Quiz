@@ -22,7 +22,11 @@ namespace Quiz.Web.Controllers {
             //save image
             XDocument xDoc = new XDocument(
                 new XDeclaration("1.0", "UTF-16", null),
-                new XElement("Team", new XAttribute("name", team.Name), new XAttribute("image", guid)));
+                new XElement("Team",
+                    new XAttribute("name", team.Name),
+                    new XAttribute("image", guid),
+                    new XElement("Score", new XText("0"))
+                    ));
 
             StringWriter sw = new StringWriter();
             XmlWriter xWrite = XmlWriter.Create(sw);

@@ -40,32 +40,5 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <script type="text/javascript">
-
-    $(document).ready(function () {
-
-        (function poll() {
-            $.ajax({
-                url: '/dash/refresh',
-                type: 'POST',
-                dataType: 'json',
-                success: function (data) {
-                    if (data != false) {
-                        console.log("Refresh received");
-                        window.location = "/dash";
-                    }
-                },
-                error: function (request, error) {
-                    console.error(error);
-                }
-            });
-
-            setTimeout(poll, 500);
-        })();
-
-    });
-
-    </script>
-
 </body>
 </html>

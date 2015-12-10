@@ -13,26 +13,31 @@ namespace Quiz.Web.Controllers {
 
         public static bool refresh = false;
 
-        public DashController() {
-            _xml = new XmlHelper(Server);
-        }
-
         // GET: Dash
         public ActionResult Index()
         {
+            var xml = new XmlHelper(Server);
+
+            if (!xml.GameExists()) {
+                xml.CreateNewGame();
+            }
             //http://www.schillmania.com/projects/fireworks/
-            var state = _xml.GetState();
+            var state = xml.GetState();
             return ProcessState(state);
         }
 
         private ActionResult ProcessState(string state) {
             switch (state) {
                 case "":
-                    var model = new TeamList {
+                    var awaitingModel = new TeamList {
                         Teams = GetTeams()
                     };
-                    return View("AwaitingView", model);
+                    return View("AwaitingView", awaitingModel);
                 case "start":
+                    var startModel = new TeamList {
+                        Teams = GetTeams()
+                    };
+                    return View("StartView", startModel);
 
                     break;
             }
@@ -63,7 +68,5 @@ namespace Quiz.Web.Controllers {
             refresh = false;
             return Json(true);
         }
-
-        private XmlHelper _xml;
     }
 }

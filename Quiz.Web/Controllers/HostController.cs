@@ -1,63 +1,64 @@
 ﻿
 namespace Quiz.Web.Controllers
 {
+    using System;
     using System.IO;
-    using System.Xml;
-    using System.Xml.Linq;
     using System.Web.Mvc;
 
     public class HostController : Controller
     {
         public HostController() {
-            _xml = new XmlHelper(Server);
 
         }
         // GET: Host
         public ActionResult Index() {
-            var state = _xml.GetState();
+            var xml = new XmlHelper(Server);
+            var state = xml.GetState();
             switch (state) {
                 case "":
-
-                    break;
+                    return View();
                 case "start":
-                    //start screen for host
-                    break;
+                    return View("Start");
+                default: //question
+                    return View("Question");
+
             }
-            return View();
+            throw new Exception("unknown state " + state);
         }
 
         [HttpPost]
         public ActionResult Start() {
-            _xml.ChangeState("start");
+            var xml = new XmlHelper(Server);
+
+            xml.ChangeState("start");
+            DashController.refresh = true;
+
+            return Redirect("/host");
+        }
+
+        [HttpPost]
+        public ActionResult Next()
+        {
+            var xml = new XmlHelper(Server);
+
+            var currentState = xml.GetState();
+            var nextQuestion = xml.Next(currentState);
+            xml.ChangeState(nextQuestion.ToString());
+            DashController.refresh = true;
+
             return Redirect("/host");
         }
 
         public ActionResult Reset() {
+            var xml = new XmlHelper(Server);
 
             RemoveAllTeams();
 
-            CreateNewGame();
+            xml.CreateNewGame();
 
             DashController.refresh = true;
 
-            return View();
-        }
-
-        private void CreateNewGame() {
-            XDocument xDoc = new XDocument(
-                new XDeclaration("1.0", "UTF-16", null),
-                new XElement("Game", new XAttribute("name", "Christmas quiz"),
-                new XElement("Step", new XText(""))
-                ));
-
-            StringWriter sw = new StringWriter();
-            XmlWriter xWrite = XmlWriter.Create(sw);
-            xDoc.Save(xWrite);
-            xWrite.Close();
-
-            // Save to Disk
-            var mappedPath = Server.MapPath("~/Game/");
-            xDoc.Save(mappedPath + "Game.xml");
+            return Redirect("/host");
         }
 
         private void RemoveAllTeams() {
@@ -67,6 +68,5 @@ namespace Quiz.Web.Controllers
                 System.IO.File.Delete(filePath);
         }
 
-        private XmlHelper _xml;
     }
 }
